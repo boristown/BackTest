@@ -56,11 +56,11 @@ for row in records:
                 update_statement += " [Price" + str(price_index+1).zfill(3) + "] = " + str(price_list[price_index])
             update_statement += " WHERE [ID] = '" + str(row[0]) +"'"
             update_statement += " AND [Symbol] = '" + row[1] +"'"
-            update_statement += " AND [Date] = '" + str(row[2]) +"'"
+            #update_statement += " AND [Date] = '" + str(row[2]) +"'"
             cursor.execute(update_statement)
             conn.commit()
+            print(row[1] + ":" +str(current_row_index) + "/" + str(records_count) + "["+ str(current_row_index * 100.0 / records_count) + "%]")
     current_row_index += 1
-    print(str(current_row_index) + "/" + str(records_count) + "["+ str(current_row_index * 100.0 / records_count) + "%]")
 
 #    print(datetime.datetime.now(), row)
 
