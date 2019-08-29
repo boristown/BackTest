@@ -14,11 +14,15 @@ print(datetime.datetime.now(), "读取数据中……")
 
 cursor = conn.cursor()
 
-cursor.execute("SELECT TOP (10) [ID] ,[Symbol] from [Investingcom]")
+cursor.execute(
+    "SELECT " \
+    " [ID] ,[Symbol], [Date],[Close] " \
+    " from [Investingcom]"
+)
 
 records = cursor.fetchall()
 
-print(datetime.datetime.now(), "读取到", len(records), "条记录:")
-
 for row in records:
     print(datetime.datetime.now(), row)
+
+print(datetime.datetime.now(), "读取到", len(records), "条记录:")
