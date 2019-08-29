@@ -25,13 +25,14 @@ records = cursor.fetchall()
 
 price_count = 120
 current_row_index = 0
+records_count = len(records)
 
 for row in records:
     price_list = []
     for price_index in range(price_count):
         last_row_index = current_row_index + price_index
-        if row[last_row_index][1] == row[current_row_index][1]:
-            price_list.append(row[last_row_index][3])
+        if records[last_row_index][1] == row[1]:
+            price_list.append(records[last_row_index][3])
         else:
             break
     if len(price_list) == price_count:
@@ -48,8 +49,18 @@ for row in records:
                     price_list[price_index] = 1.0
                 elif price_list[price_index] < 0.00001:
                     price_list[price_index] = 0.0
-
+            update_statement = "UPDATE [Investingcom] SET "
+            for price_index in range(price_count):
+                if price_index > 0:
+                    update_statement += ","
+                update_statement += " [Price" + str(price_index+1).zfill(3) + "] = " + str(price_list[price_index])
+            update_statement += " WHERE [ID] = '" + str(row[0]) +"'"
+            update_statement += " AND [Symbol] = '" + row[1] +"'"
+            update_statement += " AND [Date] = '" + str(row[2]) +"'"
+            cursor.execute(update_statement)
+            conn.commit()
     current_row_index += 1
+    print(str(current_row_index) + "/" + str(records_count) + "["+ str(current_row_index * 100.0 / records_count) + "%]")
 
 #    print(datetime.datetime.now(), row)
 
