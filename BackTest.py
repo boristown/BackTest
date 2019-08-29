@@ -17,12 +17,13 @@ cursor = conn.cursor()
 cursor.execute(
     "SELECT " \
     " [ID] ,[Symbol], [Date],[Close] " \
-    " from [Investingcom]"
+    " from [Investingcom]" \
+    " order by [Symbol] asc, [Date] desc"
 )
 
 records = cursor.fetchall()
 
-for row in records:
-    print(datetime.datetime.now(), row)
+#for row in records:
+#    print(datetime.datetime.now(), row)
 
 print(datetime.datetime.now(), "读取到", len(records), "条记录:")
