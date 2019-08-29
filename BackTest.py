@@ -31,6 +31,8 @@ for row in records:
     price_list = []
     for price_index in range(price_count):
         last_row_index = current_row_index + price_index
+        if last_row_index >= records_count:
+            break
         if records[last_row_index][1] == row[1]:
             price_list.append(records[last_row_index][3])
         else:
